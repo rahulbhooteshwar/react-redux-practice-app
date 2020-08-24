@@ -1,5 +1,5 @@
 import logger from "redux-logger"
-import { combineReducers, createStore, applyMiddleware } from "redux"
+import { combineReducers, createStore, applyMiddleware, compose } from "redux"
 import ReduxThunk from 'redux-thunk'
 
 import usersReducer from "./users/users.reducer"
@@ -13,6 +13,10 @@ const rootReducer = combineReducers(
     users: usersReducer
   }
 )
+
+// const middlewares = applyMiddleware(logger, ReduxThunk)
+// const store = createStore(rootReducer, middlewares)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = applyMiddleware(logger, ReduxThunk)
-const store = createStore(rootReducer, middlewares)
+const store = createStore(rootReducer, composeEnhancers(middlewares))
 export default store;
